@@ -1,6 +1,7 @@
 package org.example.citycab.entities;
 
 
+//import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -25,6 +26,5 @@ public class Vehicle {
 
     @OneToOne
     @JoinColumn(name = "driver_id")
-    @JsonIgnore
     private  Driver driver;
 }

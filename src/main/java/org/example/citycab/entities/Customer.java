@@ -1,4 +1,5 @@
 package org.example.citycab.entities;
+//import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -22,9 +23,9 @@ public class Customer {
     private String phoneNumber;
     private String address;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false )
     private Users user;
 
     @OneToMany(mappedBy = "customer")

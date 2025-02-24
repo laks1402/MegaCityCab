@@ -6,21 +6,24 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.example.citycab.entities.Driver;
-import org.example.citycab.services.DriverService;
+import org.example.citycab.entities.Users;
+import org.example.citycab.services.UsersService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List; //
+import java.util.List;
 
-@WebServlet("/driver")
-public class DriverController extends HttpServlet {
-    private final DriverService driverService;
+
+
+@WebServlet(value = "/users")
+public class UsersController extends HttpServlet {
+
+    private final UsersService userService;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public DriverController() {
-        this.driverService = new DriverService(); // Replace with proper initialization if using DI
+    public UsersController() {
+        this.userService = new UsersService(); // Replace with proper initialization if needed
     }
 
     @Override
@@ -30,7 +33,6 @@ public class DriverController extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
 
         try {
-            // Read the request body (JSON) into a string
             StringBuilder jsonBuffer = new StringBuilder();
             String line;
             try (BufferedReader reader = request.getReader()) {
@@ -39,24 +41,22 @@ public class DriverController extends HttpServlet {
                 }
             }
 
-            // Deserialize JSON into a Driver object
-            Driver driver = objectMapper.readValue(jsonBuffer.toString(), Driver.class);
+            // Deserialize JSON into a Users object
+            Users user = objectMapper.readValue(jsonBuffer.toString(), Users.class);
 
-            // Save the driver using the service
-            driverService.createDriver(driver);
+            // Save or update the user using the service
+            userService.saveOrUpdateUser(user);
 
-            // Set status to 201 Created
+            // Respond with status 201 Created and the User object
             response.setStatus(HttpServletResponse.SC_CREATED);
-
-            // Write the Driver object back as JSON in the response
             PrintWriter out = response.getWriter();
-            out.print(objectMapper.writeValueAsString(driver));
+            out.print(objectMapper.writeValueAsString(user));
             out.flush();
 
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             PrintWriter out = response.getWriter();
-            String errorMessage = "Error adding driver: " + e.getMessage();
+            String errorMessage = "Error adding user: " + e.getMessage();
             out.print(objectMapper.writeValueAsString(errorMessage));
             out.flush();
         }
@@ -69,36 +69,37 @@ public class DriverController extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
 
         try {
-            String driverIdParam = request.getParameter("id");
-            if (driverIdParam != null) {
-                // Get driver by ID
-                int driverId = Integer.parseInt(driverIdParam);
-                Driver driver = driverService.getDriver(driverId);
+            String userIdParam = request.getParameter("id");
 
-                if (driver != null) {
+            if (userIdParam != null) {
+                // Get user by ID
+                long userId = Long.parseLong(userIdParam);
+                Users user = userService.getUser((int) userId);
+
+                if (user != null) {
                     response.setStatus(HttpServletResponse.SC_OK);
                     PrintWriter out = response.getWriter();
-                    out.print(objectMapper.writeValueAsString(driver));
+                    out.print(objectMapper.writeValueAsString(user));
                     out.flush();
                 } else {
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
                     PrintWriter out = response.getWriter();
-                    out.print("{\"error\": \"Driver not found\"}");
+                    out.print("{\"error\": \"User not found\"}");
                     out.flush();
                 }
             } else {
-                // Get all drivers
-                List<Driver> drivers = driverService.getAllDrivers();
+                // Get all users
+                List<Users> users = userService.getAllUsers();
                 response.setStatus(HttpServletResponse.SC_OK);
                 PrintWriter out = response.getWriter();
-                out.print(objectMapper.writeValueAsString(drivers));
+                out.print(objectMapper.writeValueAsString(users));
                 out.flush();
             }
 
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             PrintWriter out = response.getWriter();
-            String errorMessage = "Error fetching driver(s): " + e.getMessage();
+            String errorMessage = "Error fetching user(s): " + e.getMessage();
             out.print(objectMapper.writeValueAsString(errorMessage));
             out.flush();
         }
@@ -111,7 +112,6 @@ public class DriverController extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
 
         try {
-            // Read the request body (JSON) into a string
             StringBuilder jsonBuffer = new StringBuilder();
             String line;
             try (BufferedReader reader = request.getReader()) {
@@ -120,24 +120,22 @@ public class DriverController extends HttpServlet {
                 }
             }
 
-            // Deserialize JSON into a Driver object
-            Driver driver = objectMapper.readValue(jsonBuffer.toString(), Driver.class);
+            // Deserialize JSON into a Users object
+            Users user = objectMapper.readValue(jsonBuffer.toString(), Users.class);
 
-            // Update the driver using the service
-            driverService.updateDriver(driver);
+            // Update the user using the service
+            userService.saveOrUpdateUser(user);
 
-            // Set status to 200 OK
+            // Respond with status 200 OK and the updated User object
             response.setStatus(HttpServletResponse.SC_OK);
-
-            // Write the updated Driver object back as JSON in the response
             PrintWriter out = response.getWriter();
-            out.print(objectMapper.writeValueAsString(driver));
+            out.print(objectMapper.writeValueAsString(user));
             out.flush();
 
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             PrintWriter out = response.getWriter();
-            String errorMessage = "Error updating driver: " + e.getMessage();
+            String errorMessage = "Error updating user: " + e.getMessage();
             out.print(objectMapper.writeValueAsString(errorMessage));
             out.flush();
         }
@@ -150,27 +148,25 @@ public class DriverController extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
 
         try {
-            String driverIdParam = request.getParameter("id");
-            if (driverIdParam != null) {
-                // Get driver ID from the request
-                int driverId = Integer.parseInt(driverIdParam);
+            String userIdParam = request.getParameter("id");
+            if (userIdParam != null) {
+                // Delete user by ID
+                long userId = Long.parseLong(userIdParam);
+                userService.deleteUser((int) userId);
 
-                // Delete the driver using the service
-                driverService.deleteDriver(driverId);
-
-                // Set status to 204 No Content (successful deletion)
+                // Respond with status 204 No Content (successful deletion)
                 response.setStatus(HttpServletResponse.SC_NO_CONTENT);
                 response.getWriter().flush();
             } else {
                 // If ID is not provided, respond with an error
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                response.getWriter().print("{\"error\": \"Driver ID is required\"}");
+                response.getWriter().print("{\"error\": \"User ID is required\"}");
                 response.getWriter().flush();
             }
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             PrintWriter out = response.getWriter();
-            String errorMessage = "Error deleting driver: " + e.getMessage();
+            String errorMessage = "Error deleting user: " + e.getMessage();
             out.print(objectMapper.writeValueAsString(errorMessage));
             out.flush();
         }

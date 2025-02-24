@@ -5,8 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -19,7 +18,7 @@ public class Booking {
     private String fromLocation;
     private String toLocation;
     private Time time;
-    private LocalDate date;
+    private Date date;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")

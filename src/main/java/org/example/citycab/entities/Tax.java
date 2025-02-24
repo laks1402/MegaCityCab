@@ -1,5 +1,6 @@
 package org.example.citycab.entities;
 
+//import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -20,7 +21,7 @@ public class Tax {
     private String taxName;
     private double taxRate;
 
-    @OneToMany(mappedBy = "tax",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tax",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Booking> booking = new ArrayList<>();
 

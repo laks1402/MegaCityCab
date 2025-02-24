@@ -1,5 +1,6 @@
 package org.example.citycab.entities;
 
+//import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -20,7 +21,7 @@ public class Driver {
     private String licenseNumber;
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "driver")
+    @OneToMany(mappedBy = "driver",fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Booking> booking;
 
