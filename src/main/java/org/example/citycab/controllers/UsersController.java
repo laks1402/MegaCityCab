@@ -74,7 +74,7 @@ public class UsersController extends HttpServlet {
             if (userIdParam != null) {
                 // Get user by ID
                 long userId = Long.parseLong(userIdParam);
-                Users user = userService.getUser((int) userId);
+                Users user = userService.getUser((Long) userId);
 
                 if (user != null) {
                     response.setStatus(HttpServletResponse.SC_OK);

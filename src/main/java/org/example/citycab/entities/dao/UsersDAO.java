@@ -32,7 +32,7 @@ public class UsersDAO {
     }
 
     // Get User by ID
-    public Users getUser(int id) {
+    public Users getUser(Long id) {
         Session session = sessionFactory.getCurrentSession();
         Transaction transaction = session.beginTransaction();
 

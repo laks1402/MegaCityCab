@@ -1,5 +1,6 @@
 package org.example.citycab.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,14 +20,16 @@ public class Booking {
     private String toLocation;
     private Time time;
     private Date date;
+    private String status;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "driver_id")
-    private Driver driver;
+    @ManyToOne
+    @JoinColumn(name = "vehicle_id")
+    @JsonBackReference
+    private Vehicle vehicle;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "tax_id")

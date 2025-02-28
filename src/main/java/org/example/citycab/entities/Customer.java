@@ -24,7 +24,7 @@ public class Customer {
     private String address;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonIgnore
+//    @JsonIgnore
     @JoinColumn(name = "user_id", nullable = false )
     private Users user;
 

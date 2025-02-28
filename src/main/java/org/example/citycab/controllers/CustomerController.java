@@ -66,41 +66,49 @@ public class CustomerController extends HttpServlet {
         }
     }
 
-    // READ: Get a customer by ID or all customers
+    // READ: Get a customer by ID
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-        String idParam = request.getParameter("id");
-        if (idParam != null) {
-            // If "id" is provided, get a specific customer
-            int id = Integer.parseInt(idParam);
-            Customer customer = customerService.getCustomer(id);
+        try {
+            String customerIdParam = request.getParameter("id");
+            if (customerIdParam != null) {
+                int customerId = Integer.parseInt(customerIdParam);
+                Customer customer = customerService.getCustomerById(customerId);
 
-            if (customer != null) {
-                response.setStatus(HttpServletResponse.SC_OK);
-                PrintWriter out = response.getWriter();
-                out.print(objectMapper.writeValueAsString(customer));
-                out.flush();
+                if (customer != null) {
+                    // Customer found, return as JSON
+                    PrintWriter out = response.getWriter();
+                    out.print(objectMapper.writeValueAsString(customer));
+                    out.flush();
+                } else {
+                    // Customer not found
+                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    PrintWriter out = response.getWriter();
+                    out.print("{\"message\": \"Customer not found\"}");
+                    out.flush();
+                }
             } else {
-                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                // If no ID is provided, return all customers
+                List<Customer> customers = customerService.getAllCustomers();
                 PrintWriter out = response.getWriter();
-                out.print("{\"error\": \"Customer not found\"}");
+                out.print(objectMapper.writeValueAsString(customers));
                 out.flush();
             }
-        } else {
-            // If "id" is not provided, get all customers
-            List<Customer> customers = customerService.getAllCustomers();
-            response.setStatus(HttpServletResponse.SC_OK);
+        } catch (Exception e) {
+            // Set status to 500 Internal Server Error
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             PrintWriter out = response.getWriter();
-            out.print(objectMapper.writeValueAsString(customers));
+            String errorMessage = "Error retrieving customer: " + e.getMessage();
+            out.print(objectMapper.writeValueAsString(errorMessage));
             out.flush();
         }
     }
 
-    // UPDATE: Update a customer's information
+    // UPDATE: Update customer information
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -122,9 +130,6 @@ public class CustomerController extends HttpServlet {
 
             // Update the customer using the service
             customerService.updateCustomer(customer);
-
-            // Set status to 200 OK
-            response.setStatus(HttpServletResponse.SC_OK);
 
             // Write the updated Customer object back as JSON in the response
             PrintWriter out = response.getWriter();
@@ -150,9 +155,34 @@ public class CustomerController extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-        int id = Integer.parseInt(request.getParameter("id"));
-        customerService.deleteCustomer(id);
+        try {
+            String customerIdParam = request.getParameter("id");
+            if (customerIdParam != null) {
+                int customerId = Integer.parseInt(customerIdParam);
 
-        response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                // Delete the customer using the service
+                customerService.deleteCustomer(customerId);
+
+                // Set status to 200 OK
+                response.setStatus(HttpServletResponse.SC_OK);
+                PrintWriter out = response.getWriter();
+                out.print("{\"message\": \"Customer deleted successfully\"}");
+                out.flush();
+            } else {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                PrintWriter out = response.getWriter();
+                out.print("{\"message\": \"Customer ID is required\"}");
+                out.flush();
+            }
+        } catch (Exception e) {
+            // Set status to 500 Internal Server Error
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            PrintWriter out = response.getWriter();
+            String errorMessage = "Error deleting customer: " + e.getMessage();
+            out.print(objectMapper.writeValueAsString(errorMessage));
+            out.flush();
+        }
     }
+
+
 }

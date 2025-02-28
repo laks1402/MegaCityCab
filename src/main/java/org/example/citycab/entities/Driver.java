@@ -16,14 +16,10 @@ public class Driver {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String name;
-    private String licenseNumber;
-    private String phoneNumber;
-
-    @OneToMany(mappedBy = "driver",fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Booking> booking;
+        private int id;
+        private String name;
+        private String licenseNumber;
+        private String phoneNumber;
 
     @OneToOne(mappedBy = "driver",cascade = CascadeType.ALL)
     @JsonIgnore

@@ -1,20 +1,21 @@
 package org.example.citycab.services;
 
+import jakarta.transaction.Transactional;
 import org.example.citycab.entities.Booking;
+import org.example.citycab.entities.Payment;
 import org.example.citycab.entities.dao.BookingDAO;
 
+import java.util.Date;
 import java.util.List;
+
 
 public class BookingService {
 
     private BookingDAO bookingDAO = new BookingDAO();
 
+    @Transactional
     public void addBooking(Booking booking) {
-        bookingDAO.saveBooking(booking);
-    }
-
-    public Booking getBooking(Long id) {
-        return bookingDAO.getBookingById(id);
+        bookingDAO.saveBooking(booking); // Save the booking first
     }
 
     public List<Booking> listAllBookings() {

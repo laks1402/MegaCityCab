@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.example.citycab.entities.Vehicle;
 import org.example.citycab.services.VehicleService;
 import org.example.citycab.entities.dao.VehicleDAO;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;

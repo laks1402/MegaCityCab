@@ -1,13 +1,13 @@
 package org.example.citycab.entities.dao;
-import org.example.citycab.entities.Booking;
-import org.example.citycab.entities.Customer;
-import org.example.citycab.entities.Driver;
-import org.example.citycab.entities.Tax;
+import jakarta.transaction.Transactional;
+import org.example.citycab.entities.*;
 import org.example.citycab.utils.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import java.util.Date;
+
 
 import java.util.List;
 public class BookingDAO {
@@ -21,6 +21,7 @@ public class BookingDAO {
                 .buildSessionFactory();
     }
 
+    @Transactional
     public void saveBooking(Booking booking) {
         Transaction transaction = null;
         try (Session session = factory.openSession()) {
@@ -28,24 +29,43 @@ public class BookingDAO {
 
             // Fetch existing references from DB to avoid transient object issues
             Customer customer = session.get(Customer.class, booking.getCustomer().getId());
-            Driver driver = session.get(Driver.class, booking.getDriver().getId());
+            Vehicle vehicle = session.get(Vehicle.class, booking.getVehicle().getId());
             Tax tax = session.get(Tax.class, booking.getTax().getId());
 
-            if (customer == null || driver == null || tax == null) {
+            if (customer == null || vehicle == null || tax == null) {
                 throw new IllegalArgumentException("Invalid foreign key references!");
             }
 
+            // Set fetched entities to avoid transient issues
             booking.setCustomer(customer);
-            booking.setDriver(driver);
+            booking.setVehicle(vehicle);
             booking.setTax(tax);
 
+            // Fetch vehicle amount and multiply by 2
+            double totalAmount = vehicle.getPrice() * 2;
+//            booking.amount(totalAmount); // Assuming Booking has a setTotalAmount method
+
+            // Save the booking first
             session.save(booking);
+
+            // Create and associate payment
+            Payment payment = new Payment();
+            payment.setAmount(totalAmount);  // Set the doubled amount
+            payment.setPaymentDate(new Date());  // Set current date as payment date
+            payment.setPaymentMethod("Online");  // Example method (modify as needed)
+            payment.setIsSuccessful(true);  // Assuming payment succeeds
+            payment.setBooking(booking);  // Link payment to booking
+
+            // Save the payment
+            session.save(payment);
+
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
             e.printStackTrace();
         }
     }
+
 
 
     public Booking getBookingById(Long id) {

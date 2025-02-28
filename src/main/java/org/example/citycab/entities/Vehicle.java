@@ -7,6 +7,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Setter
 @Getter
@@ -23,8 +26,15 @@ public class Vehicle {
     private String color;
     private String engine;
     private String fuelType;
+    private double price;
+    private int seatcount;
+    private String image;
 
     @OneToOne
     @JoinColumn(name = "driver_id")
     private  Driver driver;
+
+    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Booking> booking = new ArrayList<>();
 }

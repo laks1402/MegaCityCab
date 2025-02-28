@@ -19,7 +19,7 @@ public class UsersService {
     }
 
     // Get User by ID
-    public Users getUser(int id) {
+    public Users getUser(Long id) {
         return usersDAO.getUser(id);
     }
 
