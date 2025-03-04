@@ -149,26 +149,41 @@ public class UsersController extends HttpServlet {
 
         try {
             String userIdParam = request.getParameter("id");
-            if (userIdParam != null) {
-                // Delete user by ID
-                long userId = Long.parseLong(userIdParam);
-                userService.deleteUser((int) userId);
 
-                // Respond with status 204 No Content (successful deletion)
-                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-                response.getWriter().flush();
-            } else {
-                // If ID is not provided, respond with an error
+            if (userIdParam == null || userIdParam.isEmpty()) {
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                response.getWriter().print("{\"error\": \"User ID is required\"}");
-                response.getWriter().flush();
+                response.getWriter().write("{\"error\": \"User ID is required\"}");
+                return;
             }
+
+            long userId;
+            try {
+                userId = Long.parseLong(userIdParam);
+            } catch (NumberFormatException e) {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                response.getWriter().write("{\"error\": \"Invalid User ID format\"}");
+                return;
+            }
+
+            // Check if user exists before deleting
+            Users user = userService.getUser(userId);
+            if (user == null) {
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                response.getWriter().write("{\"error\": \"User not found\"}");
+                return;
+            }
+
+            // Delete the user
+            userService.deleteUser(userId);
+
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.getWriter().write("{\"message\": \"User deleted successfully\"}");
+
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            PrintWriter out = response.getWriter();
-            String errorMessage = "Error deleting user: " + e.getMessage();
-            out.print(objectMapper.writeValueAsString(errorMessage));
-            out.flush();
+            response.getWriter().write("{\"error\": \"Error deleting user: " + e.getMessage() + "\"}");
         }
     }
+
+
 }

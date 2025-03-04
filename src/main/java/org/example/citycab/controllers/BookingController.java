@@ -8,12 +8,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.citycab.entities.Booking;
+import org.example.citycab.entities.dao.BookingDAO;
 import org.example.citycab.services.BookingService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+
+
 
 @WebServlet("/booking")
 public class BookingController extends HttpServlet {
@@ -144,6 +147,8 @@ public class BookingController extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             response.getWriter().write("{\"error\": \"Error updating booking: " + e.getMessage() + "\"}");
         }
+
+
     }
 
 

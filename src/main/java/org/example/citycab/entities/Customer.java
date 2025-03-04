@@ -28,11 +28,11 @@ public class Customer {
     @JoinColumn(name = "user_id", nullable = false )
     private Users user;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Booking> booking = new ArrayList<>();
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Feedback> feedbacks = new ArrayList<>();
 

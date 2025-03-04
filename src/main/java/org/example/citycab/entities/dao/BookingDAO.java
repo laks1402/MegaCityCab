@@ -66,46 +66,51 @@ public class BookingDAO {
         }
     }
 
-
-
-    public Booking getBookingById(Long id) {
-            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-                return session.get(Booking.class, id);
-            }
+    public List<Booking> getAllBookings() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("from Booking", Booking.class).list();
         }
+    }
 
-        public List<Booking> getAllBookings() {
-            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-                return session.createQuery("from Booking", Booking.class).list();
-            }
+    public void updateBooking(Booking booking) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.update(booking);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
         }
+    }
 
-        public void updateBooking(Booking booking) {
-            Transaction transaction = null;
-            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-                transaction = session.beginTransaction();
-                session.update(booking);
-                transaction.commit();
-            } catch (Exception e) {
-                if (transaction != null) transaction.rollback();
-                e.printStackTrace();
-            }
-        }
+    public void deleteBooking(Long id) {
+        Transaction transaction = null;
+        try (Session session = factory.openSession()) {
+            transaction = session.beginTransaction();
 
-        public void deleteBooking(Long id) {
-            Transaction transaction = null;
-            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-                transaction = session.beginTransaction();
-                Booking booking = session.get(Booking.class, id);
-                if (booking != null) {
-                    session.delete(booking);
-                }
-                transaction.commit();
-            } catch (Exception e) {
-                if (transaction != null) transaction.rollback();
-                e.printStackTrace();
+            // Fetch the booking by ID
+            Booking booking = session.get(Booking.class, id);
+
+            // Check if booking exists
+            if (booking != null) {
+                // Delete the booking if it exists
+                session.remove(booking);
+            } else {
+                // If booking doesn't exist, log or throw a custom exception
+                System.out.println("Booking with ID " + id + " not found.");
+                // Optionally throw a custom exception like BookingNotFoundException
             }
+
+            transaction.commit();
+        } catch (Exception e) {
+//            if (transaction != null) {
+//                transaction.rollback(); // Rollback in case of failure
+//            }
+            e.printStackTrace();
         }
     }
 
 
+
+}
