@@ -13,24 +13,6 @@ public class UsersService {
         usersDAO = new UsersDAO();
     }
 
-    // Authenticate User
-    public Users authenticateUser(String username, String password) {
-        List<Users> users = usersDAO.getAllUsers();
-        return users.stream()
-                .filter(user -> user.getUsername().equals(username) && user.getPassword().equals(password))
-                .findFirst()
-                .orElse(null);
-    }
-
-    // Add a method to check the user's role
-    public String getUserRole(String username, String password) {
-        Users user = authenticateUser(username, password);  // Pass both username and password
-        if (user != null) {
-            // Assuming the 'Users' class has a 'role' field (e.g., 'admin' or 'user')
-            return user.getRole(); // Returns 'admin' or 'user'
-        }
-        return null;  // Return null if user is not found
-    }
 
     // Save or Update User
     public void saveOrUpdateUser(Users user) {

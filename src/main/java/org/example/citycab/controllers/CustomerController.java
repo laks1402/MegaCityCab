@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.citycab.entities.Customer;
 import org.example.citycab.services.CustomerService;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;

@@ -86,5 +86,9 @@ public class UsersDAO {
 
     public void close() {
         sessionFactory.close();
+
     }
+
+
+
 }

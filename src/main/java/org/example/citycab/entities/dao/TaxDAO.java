@@ -42,7 +42,7 @@ public class TaxDAO {
 
     // Read Tax by ID
     public Tax getTaxById(int taxId) {
-        Session session = factory.getCurrentSession();
+        Session session = factory.openSession();
         Tax tax = null;
 
         try {
@@ -60,7 +60,7 @@ public class TaxDAO {
 
     // Get all Taxes
     public List<Tax> getAllTaxes() {
-        Session session = factory.getCurrentSession();
+        Session session = factory.openSession();
         List<Tax> taxes = null;
 
         try {
@@ -79,7 +79,7 @@ public class TaxDAO {
 
     // Delete Tax
     public void deleteTax(int taxId) {
-        Session session = factory.getCurrentSession();
+        Session session = factory.openSession();
         Transaction transaction = null;
 
         try {
