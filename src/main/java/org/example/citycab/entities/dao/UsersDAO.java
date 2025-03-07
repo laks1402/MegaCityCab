@@ -3,6 +3,7 @@ package org.example.citycab.entities.dao;
 import org.example.citycab.entities.Tax;
 import org.example.citycab.entities.Users;
 import org.example.citycab.utils.HibernateUtil;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -33,7 +34,7 @@ public class UsersDAO {
 
     // Get User by ID
     public Users getUser(Long id) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
 
         Users user = session.get(Users.class, id);
@@ -42,28 +43,45 @@ public class UsersDAO {
         return user;
     }
 
-    // Delete User
-    public void deleteUser(int id) {
-        Session session = sessionFactory.getCurrentSession();
-        Transaction transaction = session.beginTransaction();
+    public void deleteUser(long id) {
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
 
-        Users user = session.get(Users.class, id);
-        if (user != null) {
-            session.delete(user);
+            // Fetch the user by ID
+            Users user = session.get(Users.class, id);
+
+            if (user != null) {
+                session.delete(user);
+            } else {
+                System.out.println("User with ID " + id + " not found.");
+            }
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback(); // Rollback transaction on failure
+            }
+            e.printStackTrace();
         }
-
-        transaction.commit();
     }
+
 
     // Get all Users
     public List<Users> getAllUsers() {
-        Session session = sessionFactory.getCurrentSession();
-        Transaction transaction = session.beginTransaction();
 
-        List<Users> usersList = session.createQuery("from Users", Users.class).getResultList();
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
 
-        transaction.commit();
-        return usersList;
+            List<Users> usersList = session.createQuery("from Users", Users.class).getResultList();
+
+            transaction.commit();
+            return usersList;
+        }catch (HibernateException e) {
+            throw new HibernateException(e);
+        }
+
+
     }
 
     public void close() {

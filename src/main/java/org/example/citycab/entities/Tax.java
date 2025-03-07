@@ -21,7 +21,7 @@ public class Tax {
     private String taxName;
     private double taxRate;
 
-    @OneToMany(mappedBy = "tax",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "tax",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Booking> booking = new ArrayList<>();
 
