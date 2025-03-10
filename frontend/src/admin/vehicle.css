@@ -1,0 +1,147 @@
+/* Container styling */
+.vehicle-container {
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  border-radius: 10px;
+  max-width: 1000px; /* Adjust width for better form size */
+  margin: 20px auto;
+  padding: 15px; /* Reduced padding */
+}
+
+/* Corner button */
+.corner-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px; /* Smaller padding */
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.corner-button:hover {
+  background-color: #0056b3;
+}
+
+/* Vehicle table */
+.vehicle-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.vehicle-table th,
+.vehicle-table td {
+  border: 1px solid #ddd;
+  padding: 6px; /* Smaller padding */
+  text-align: center;
+}
+
+.vehicle-table th {
+  color: black;
+  background-color: #f4f4f4;
+}
+
+/* Edit & Delete buttons inside the table */
+.vehicle-table td button.edit-button {
+  background-color: #e0a800;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.vehicle-table td button.edit-button:hover {
+  background-color: #cf9800;
+}
+
+.vehicle-table td button.delete-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.vehicle-table td button.delete-button:hover {
+  background-color: #c82333;
+}
+
+/* Edit Form Styling */
+.edit-form {
+  max-width: 700px; /* Adjust width */
+  margin: 20px auto;
+  padding: 15px; /* Smaller padding */
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Grid: Three fields per row */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three fields per row */
+  gap: 10px; /* Smaller gap */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 3px; /* Reduce space */
+  font-size: 14px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 6px; /* Reduced padding */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* Form Buttons */
+.form-actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* Save Button */
+.save-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.save-button:hover {
+  background-color: #218838;
+}
+
+/* Cancel Button */
+.cancel-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.cancel-button:hover {
+  background-color: #c82333;
+}
