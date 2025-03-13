@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';  // Import Link from react-router-dom
+import { Link } from 'react-router-dom';
 import './login.css';
 
 const Register = () => {
@@ -10,6 +10,8 @@ const Register = () => {
     confirmPassword: '',
   });
 
+  const [message, setMessage] = useState('');
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -18,13 +20,37 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your registration logic here
-    if (formData.password === formData.confirmPassword) {
-      console.log('Registration successful', formData);
-    } else {
-      console.log('Passwords do not match');
+
+    if (formData.password !== formData.confirmPassword) {
+      setMessage("Passwords do not match!");
+      return;
+    }
+
+    const userData = {
+      username: formData.username,
+      email: formData.email,
+      password: formData.password,
+    };
+
+    try {
+      const response = await fetch('http://localhost:8091/citycab_war_exploded/users', {  
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (response.ok) {
+        setMessage("Registration successful!");
+      } else {
+        const errorData = await response.json();
+        setMessage(errorData.error || "Registration failed!");
+      }
+    } catch (error) {
+      setMessage("Server error. Please try again.");
     }
   };
 
@@ -35,7 +61,6 @@ const Register = () => {
         <p className="subheading">Fill in the details to register</p>
       
         <form onSubmit={handleSubmit}>
-          {/* Username Input */}
           <h1 className="heading2">Username</h1>
           <input
             type="text"
@@ -46,7 +71,6 @@ const Register = () => {
             className="input-field"
           />
 
-          {/* Email Input */}
           <h1 className="heading2">Email</h1>
           <input
             type="email"
@@ -57,7 +81,6 @@ const Register = () => {
             className="input-field"
           />
 
-          {/* Password Input */}
           <h1 className="heading2">Password</h1>
           <input
             type="password"
@@ -68,7 +91,6 @@ const Register = () => {
             className="input-field"
           />
 
-          {/* Re-enter Password Input */}
           <h1 className="heading2">Re-enter Password</h1>
           <input
             type="password"
@@ -79,13 +101,13 @@ const Register = () => {
             className="input-field"
           />
 
-          {/* Register Button */}
+          {message && <p className="message">{message}</p>}
+
           <button type="submit" className="button">
             Register
           </button>
           <br/>
           
-          {/* Link to Login Page */}
           <Link to="/login">
             <button type="button" className="button">
               Login

@@ -1,5 +1,5 @@
 import React from 'react';
-import aboutImage from '../assets/megaCityCabImage1.jpg';  // Replace with an image related to MegaCityCab
+import aboutImage from '../assets/megaCityCabImage1.jpg';  
 
 const About = () => {
   return (
@@ -8,12 +8,12 @@ const About = () => {
         <div className="space-y-6 md:space-y-0 md:flex md:gap-6 lg:items-center lg:gap-12">
           <div className="md:5/12 lg:w-5/12">
             <img
-              src={aboutImage}  // Use the imported image here
+              src={aboutImage}  
               alt="MegaCityCab - Ride with Comfort"
               loading="lazy"
-              width="100%"  // Optional, adjust as needed
-              height="auto" // Optional, adjust as needed
-              className="rounded-lg"  // This will round the corners of the image
+              width="100%"  
+              height="auto" 
+              className="rounded-lg"  
             />
           </div>
           <div className="md:7/12 lg:w-6/12">

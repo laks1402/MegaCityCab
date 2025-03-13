@@ -18,8 +18,8 @@ const Booking = () => {
           date: new Date(booking.date).toLocaleDateString(),
           customer: booking.customer?.name,
           status: booking.payment ? "Confirmed" : "Pending",
-          tax_id: booking.tax_id,
-          vehicle_id: booking.vehicle_id,
+          tax_id: booking.taxName,
+          vehicle_id: booking.vehicle ? booking.vehicle.id : "N/A" ,
         }));
         setBookings(formattedBookings);
       })

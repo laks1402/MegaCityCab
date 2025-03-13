@@ -28,7 +28,7 @@ public class Booking {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "vehicle_id")
-    @JsonBackReference
+//    @JsonBackReference
     private Vehicle vehicle;
 
     @ManyToOne(cascade = CascadeType.PERSIST)

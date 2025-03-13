@@ -58,6 +58,7 @@ public class BookingDAO {
 
             transaction.commit();
         } catch (Exception e) {
+            e.printStackTrace();
             if (transaction != null) transaction.rollback();
             e.printStackTrace();
         }

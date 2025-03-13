@@ -17,8 +17,10 @@ public class Users {
     private String username;
     private String password;
     private String role;
+    private String email;
 
     @OneToOne(cascade = CascadeType.ALL,mappedBy = "user")
     @JsonIgnore
     private Customer customer;
+
 }

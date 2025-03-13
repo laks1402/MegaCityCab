@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-// import { Menu, X } from 'lucide-react';
 import '../App.css';
 import logo from '../assets/—Pngtree—taxi_1806490.png';
 
@@ -9,7 +8,6 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      {/* Navbar Brand */}
       <div className="navbar-brand">
         <img src={logo} alt="Company Logo" className="navbar-logo" />
         <span 
@@ -20,16 +18,14 @@ const Navbar = () => {
 </span>
       </div>
 
-      {/* Hamburger Menu Button */}
+     
       <button className="menu-toggle" onClick={() => setIsOpen(!isOpen)}>
   {isOpen ? '✖' : '☰'}
 </button>
 
 
-      {/* Navbar Links */}
       <div className={`navbar-links ${isOpen ? 'open' : ''}`}>
         <Link to="/" className="nav-item" onClick={() => setIsOpen(false)}>Home</Link>
-        <Link to="/rides" className="nav-item" onClick={() => setIsOpen(false)}>Rides</Link>
         <Link to="/about" className="nav-item" onClick={() => setIsOpen(false)}>About Us</Link>
         <Link to="/contact" className="nav-item" onClick={() => setIsOpen(false)}>Contact Us</Link>
         <Link to="/login" className="nav-item" onClick={() => setIsOpen(false)}>Login</Link>

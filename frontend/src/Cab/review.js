@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "./navbar";
 import { Star } from "lucide-react";
-import { motion } from "framer-motion"; // Framer Motion for animations
+import { motion } from "framer-motion"; 
 
 const GuestReviewsPage = () => {
   const [reviews, setReviews] = useState([
@@ -37,10 +37,8 @@ const GuestReviewsPage = () => {
 
   return (
     <>
-      {/* Header Component */}
       <Header />
 
-      {/* Main Content */}
       <div className="min-h-screen bg-gradient-to-b from-gray-100 to-white py-10">
         <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl p-8">
           <motion.h1
@@ -52,7 +50,6 @@ const GuestReviewsPage = () => {
             Guest Reviews and Ratings
           </motion.h1>
 
-          {/* Aggregated Rating Section */}
           <motion.div
             className="text-center mb-8"
             initial={{ scale: 0.8, opacity: 0 }}
@@ -63,7 +60,7 @@ const GuestReviewsPage = () => {
             <div className="flex justify-center items-center mt-2">
               <div className="text-3xl font-bold text-customdarkBlue">{averageRating.toFixed(1)}</div>
               <div className="flex ml-2">
-                {/* Animate Stars */}
+        
                 {Array.from({ length: Math.round(averageRating) }, (_, index) => (
                   <motion.div
                     key={index}
@@ -74,7 +71,7 @@ const GuestReviewsPage = () => {
                     transition={{
                       duration: 1.5,
                       repeat: Infinity,
-                      delay: index * 0.2, // Slight delay between stars
+                      delay: index * 0.2, 
                     }}
                   >
                     <Star className="text-custombrown w-6 h-6" />
@@ -85,7 +82,7 @@ const GuestReviewsPage = () => {
             <p className="text-gray-500">{reviews.length} reviews</p>
           </motion.div>
 
-          {/* Review Form */}
+          
           <motion.div
             className="mb-8"
             initial={{ opacity: 0, x: -100 }}
@@ -111,7 +108,7 @@ const GuestReviewsPage = () => {
                 rows="4"
               ></textarea>
               <div className="flex items-center space-x-2">
-                {/* Rating Stars */}
+               
                 {[1, 2, 3, 4, 5].map((star) => (
                   <motion.div
                     key={star}
@@ -137,7 +134,7 @@ const GuestReviewsPage = () => {
             </div>
           </motion.div>
 
-          {/* List of Reviews */}
+       
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -182,7 +179,7 @@ const GuestReviewsPage = () => {
         </div>
       </div>
 
-      {/* Footer Component */}
+     
       <Footer />
     </>
   );

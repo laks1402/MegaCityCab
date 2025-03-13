@@ -1,3 +1,4 @@
+// Rides.jsx
 import React, { useState, useEffect, useRef } from "react";
 import VehicleOptions from "./vehicleOptions";
 import "./Rides.css";
@@ -10,13 +11,12 @@ const Rides = () => {
   const [passengers, setPassengers] = useState(1);
   const [selectedVehicle, setSelectedVehicle] = useState(null);
   const [bookingMessage, setBookingMessage] = useState("");
-  const mapRef = useRef(null); // Ref for the map container
+  const mapRef = useRef(null);
 
   const API_BASE_URL = "http://localhost:8091/citycab_war_exploded";
   const GOOGLE_MAPS_API_KEY = "AIzaSyAfnU5Kz7HncH4JH5HVX4ptJgHBMOgE4Xw";
 
   useEffect(() => {
-    // Load Google Maps API script
     const script = document.createElement("script");
     script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places,drawing`;
     script.async = true;
@@ -36,7 +36,7 @@ const Rides = () => {
     if (!mapRef.current || !window.google) return;
 
     const map = new window.google.maps.Map(mapRef.current, {
-      center: { lat: 6.9271, lng: 79.8612 }, // Default center (Colombo, Sri Lanka)
+      center: { lat: 6.9271, lng: 79.8612 },
       zoom: 10,
     });
 
@@ -45,7 +45,6 @@ const Rides = () => {
       map: map,
     });
 
-    // Update map when from/to locations change
     if (from && to) {
       const geocoder = new window.google.maps.Geocoder();
 
@@ -89,8 +88,14 @@ const Rides = () => {
   };
 
   const handleSearch = async () => {
-    if (!from || !to || !pickupDate || !pickupTime) {
-      setBookingMessage("Please fill in all required fields.");
+    if (!from || !to || !pickupDate || !pickupTime || !selectedVehicle) {
+      setBookingMessage("Please fill in all required fields and select a vehicle.");
+      console.log(from)
+      console.log(to)
+      console.log("pickupDate"+pickupDate)
+      console.log("pickupTime"+pickupTime)
+      console.log("selectedVehicle"+ selectedVehicle)
+      // console.log(from)
       return;
     }
 
@@ -103,10 +108,11 @@ const Rides = () => {
         time: formattedTime,
         date: pickupDate,
         customer: { id: 1 },
-        vehicle: { id: 1 },
+        vehicle: { id: selectedVehicle.id },
         tax: { id: 1 },
         payment: { id: 1 },
       };
+      
 
       const response = await fetch(`${API_BASE_URL}/booking`, {
         method: "POST",
@@ -122,6 +128,7 @@ const Rides = () => {
       }
 
       const bookedData = await response.json();
+      
       setBookingMessage(`Booking saved successfully! ID: ${bookedData.id}`);
     } catch (error) {
       setBookingMessage("Error saving booking: " + error.message);
@@ -135,7 +142,6 @@ const Rides = () => {
       </header>
 
       <div className="rides-content">
-        {/* Booking Form */}
         <div className="rides-form">
           <h2 className="form-title">Book Your Ride</h2>
           <div className="form-row">
@@ -199,14 +205,16 @@ const Rides = () => {
           {bookingMessage && <p className="booking-message">{bookingMessage}</p>}
         </div>
 
-        {/* Map Section */}
         <div className="map-container" ref={mapRef}>
           {/* Map will render here via Google Maps API */}
         </div>
       </div>
 
-      {/* Vehicle Options Section */}
-      <VehicleOptions passengers={passengers} />
+      <VehicleOptions 
+        passengers={passengers}
+        selectedVehicle={selectedVehicle}
+        setSelectedVehicle={setSelectedVehicle}
+      />
     </div>
   );
 };

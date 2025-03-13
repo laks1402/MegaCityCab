@@ -61,6 +61,7 @@ public class BookingController extends HttpServlet {
             out.flush();
 
         } catch (Exception e) {
+            e.printStackTrace();
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             response.getWriter().write("{\"error\": \"Error adding booking: " + e.getMessage() + "\"}");
         }
