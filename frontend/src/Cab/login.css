@@ -71,85 +71,85 @@ body, html {
     background-color: rgba(255, 223, 51, 0.75);
   }
   
-  /* styles.css */
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: Arial, sans-serif;
-  }
-  
   .register-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-image: url('../assets/taxi.jpg');
-    background-size: cover;
-    background-position: center;
+    min-height: 100vh;
+    background-image: url('../assets/taxi.jpg'); /* Added background image */
+    background-size: cover; /* Ensures the image covers the entire container */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents tiling */
   }
   
-
   .register-box {
-    background-color: rgba(255, 255, 255, 0.7);
-    padding: 24px;
-    border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    width: 380px;
-  }
-
-  .heading2{
-    font-weight: bold;
-    margin-bottom: 5px;
-    padding-right: 140px;
+    background: rgba(255, 255, 255, 0.9); /* Slightly transparent white for readability */
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
   }
   
   .heading {
-    font-size: 30px;
-    font-weight: bold;
-    color: #2d3748;
-    margin-bottom: 8px;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
   }
   
   .subheading {
-    font-size: 15px;
-    margin-bottom: 20px;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #666;
   }
   
-  .input-field {
+  .register-form {
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
+    gap: 1rem;
   }
   
-  .input-label-container {
+  .form-group {
     display: flex;
-    justify-content: flex-start;
-  }
-
-  .input-field {
-    width: 100%;
-    padding: 12px;
-    margin: 12px 0;
-    color: #2d3748;
-    font-size: 16px;
+    flex-direction: column;
   }
   
+  .heading2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .input-field {
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+  }
+  
+  .message {
+    text-align: center;
+    color: #ff0000;
+    margin: 1rem 0;
+  }
+  
+  .button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
   
   .button {
-    width: 100%;
-    padding: 12px;
-    margin: 16px 0;
-    border-radius: 30px;
-    background-color: #4c51bf;
+    padding: 0.75rem;
+    font-size: 1rem;
+    background-color: #007bff;
     color: white;
     border: none;
-    font-size: 16px;
-    font-weight: 600;
+    border-radius: 4px;
     cursor: pointer;
+    width: 100%;
   }
   
   .button:hover {
-    background-color: #434190;
+    background-color: #0056b3;
   }
-  

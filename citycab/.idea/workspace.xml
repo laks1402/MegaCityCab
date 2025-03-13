@@ -9,7 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f6cbec8f-72bc-4236-acfa-f9653ee02194" name="Changes" comment="28/02/2025 user module" />
+    <list default="true" id="f6cbec8f-72bc-4236-acfa-f9653ee02194" name="Changes" comment="28/02/2025 user module">
+      <change beforePath="$PROJECT_DIR$/../frontend/src/Cab/footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/Cab/footer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/Cab/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/Cab/home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/Cab/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/Cab/register.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -272,7 +276,7 @@
       <workItem from="1741676315505" duration="17000" />
       <workItem from="1741680901380" duration="111000" />
       <workItem from="1741688736896" duration="709000" />
-      <workItem from="1741690116519" duration="21036000" />
+      <workItem from="1741690116519" duration="30556000" />
     </task>
     <task id="LOCAL-00001" summary="28/02/2025 user module">
       <option name="closed" value="true" />
@@ -326,5 +330,66 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="28/02/2025 user module" />
     <option name="LAST_COMMIT_MESSAGE" value="28/02/2025 user module" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/citycab/entities/dao/CustomerDAO.java</url>
+          <line>44</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/citycab/entities/dao/CustomerDAO.java</url>
+          <line>48</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/citycab/entities/dao/CustomerDAO.java</url>
+          <line>51</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/citycab/entities/dao/CustomerDAO.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/citycab/entities/dao/CustomerDAO.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/citycab/controllers/UsersController.java</url>
+          <line>56</line>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/citycab/controllers/UsersController.java</url>
+          <line>62</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/citycab/controllers/UsersController.java</url>
+          <line>69</line>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/citycab/controllers/UsersController.java</url>
+          <line>77</line>
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/citycab/controllers/UsersController.java</url>
+          <line>85</line>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/citycab/controllers/UsersController.java</url>
+          <line>51</line>
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

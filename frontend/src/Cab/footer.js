@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -17,11 +18,15 @@ const Footer = () => {
           <div>
             <h2 className="text-xl font-semibold text-white">Quick Links</h2>
             <ul className="mt-4 space-y-2">
-              {["Home", "About Us", "Services", "Contact"].map((item, index) => (
+              {[
+                { name: "Home", path: "/" },
+                { name: "About Us", path: "/about" },
+                { name: "Contact", path: "/contact" },
+              ].map(({ name, path }, index) => (
                 <li key={index}>
-                  <a href="#" className="text-gray-400 hover:text-white transition">
-                    {item}
-                  </a>
+                  <Link to={path} className="text-gray-400 hover:text-white transition">
+                    {name}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -30,7 +35,7 @@ const Footer = () => {
           {/* Contact Info */}
           <div>
             <h2 className="text-xl font-semibold text-white">Contact Us</h2>
-            <p className="mt-4 text-gray-400">📍 3/6 vellawathe Colombo </p>
+            <p className="mt-4 text-gray-400">📍 3/6 Vellawathe, Colombo</p>
             <p className="text-gray-400">📞 +94 11 2525475</p>
             <p className="text-gray-400">✉ office@megacitycab.com</p>
           </div>
@@ -40,9 +45,9 @@ const Footer = () => {
 
         {/* Bottom Footer */}
         <div className="flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400">© 2025 MEgaCityCab. All Rights Reserved.</p>
+          <p className="text-gray-400">© 2025 MegaCityCab. All Rights Reserved.</p>
           <div className="flex space-x-4 mt-4 md:mt-0">
-            {[ 
+            {[
               { src: "https://www.svgrepo.com/show/303114/facebook-3-logo.svg", alt: "Facebook" },
               { src: "https://www.svgrepo.com/show/303115/twitter-3-logo.svg", alt: "Twitter" },
               { src: "https://www.svgrepo.com/show/303145/instagram-2-1-logo.svg", alt: "Instagram" },

@@ -1,17 +1,22 @@
 package org.example.citycab.controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.example.citycab.entities.Customer;
 import org.example.citycab.entities.Users;
+import org.example.citycab.entities.dao.CustomerDAO;
+import org.example.citycab.services.CustomerService;
 import org.example.citycab.services.UsersService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -21,9 +26,11 @@ public class UsersController extends HttpServlet {
 
     private final UsersService userService;
     private final ObjectMapper objectMapper = new ObjectMapper();
-
+    private final CustomerService customerService;
     public UsersController() {
-        this.userService = new UsersService(); // Replace with proper initialization if needed
+        this.userService = new UsersService();
+        this.customerService = new CustomerService();
+        // Replace with proper initialization if needed
     }
 
     @Override
@@ -33,6 +40,7 @@ public class UsersController extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
 
         try {
+            // Read JSON from request body
             StringBuilder jsonBuffer = new StringBuilder();
             String line;
             try (BufferedReader reader = request.getReader()) {
@@ -41,10 +49,32 @@ public class UsersController extends HttpServlet {
                 }
             }
 
-            // Deserialize JSON into a Users object
-            Users user = objectMapper.readValue(jsonBuffer.toString(), Users.class);
+            JsonNode jsonNode = objectMapper.readTree(jsonBuffer.toString());
 
-            // Save or update the user using the service
+            Users user = new Users();
+            user.setUsername(jsonNode.get("username").asText());
+            user.setEmail(jsonNode.get("email").asText());
+            user.setPassword(jsonNode.get("password").asText());
+            user.setRole("user");
+
+            Customer customer = new Customer();
+            customer.setName(user.getUsername()); // Reuse username as name
+            customer.setEmail(user.getEmail());   // Reuse email
+            if (jsonNode.has("address")) {
+                customer.setAddress(jsonNode.get("address").asText());
+            }
+            if (jsonNode.has("identityCard")) {
+                customer.setIc(jsonNode.get("identityCard").asText());
+            }
+            if (jsonNode.has("phoneNumber")) {
+                customer.setPhoneNumber(jsonNode.get("phoneNumber").asText());
+            }
+
+            // Set bidirectional relationship
+            user.setCustomer(customer);
+            customer.setUser(user);
+
+            // Save the user (cascades to customer due to CascadeType.ALL)
             userService.saveOrUpdateUser(user);
 
             // Respond with status 201 Created and the User object
@@ -56,9 +86,10 @@ public class UsersController extends HttpServlet {
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             PrintWriter out = response.getWriter();
-            String errorMessage = "Error adding user: " + e.getMessage();
-            out.print(objectMapper.writeValueAsString(errorMessage));
+            String errorMessage = "Error adding user and customer: " + e.getMessage();
+            out.print(objectMapper.writeValueAsString(Collections.singletonMap("error", errorMessage)));
             out.flush();
+            e.printStackTrace(); // For debugging
         }
     }
 

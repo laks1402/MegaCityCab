@@ -14,27 +14,27 @@ public class UsersService {
     }
 
 
-    // Save or Update User
+
     public void saveOrUpdateUser(Users user) {
         usersDAO.saveOrUpdateUser(user);
     }
 
-    // Get User by ID
+
     public Users getUser(Long id) {
         return usersDAO.getUser(id);
     }
 
-    // Delete User
+
     public void deleteUser(long id) {
         usersDAO.deleteUser(id);
     }
 
-    // Get All Users
+
     public List<Users> getAllUsers() {
         return usersDAO.getAllUsers();
     }
 
-    // Close DAO connection
+
     public void close() {
         usersDAO.close();
     }

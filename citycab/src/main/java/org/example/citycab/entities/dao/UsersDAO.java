@@ -24,7 +24,7 @@ public class UsersDAO {
                 .buildSessionFactory();
     }
 
-    // Create or Update User
+
     public void saveOrUpdateUser(Users user) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
@@ -34,7 +34,6 @@ public class UsersDAO {
         transaction.commit();
     }
 
-    // Get User by ID
     public Users getUser(Long id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
@@ -57,7 +56,6 @@ public class UsersDAO {
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
 
-            // Fetch the user by ID
             Users user = session.get(Users.class, id);
 
             if (user != null) {
@@ -75,8 +73,6 @@ public class UsersDAO {
         }
     }
 
-
-    // Get all Users
     public List<Users> getAllUsers() {
 
         try (Session session = sessionFactory.openSession()) {

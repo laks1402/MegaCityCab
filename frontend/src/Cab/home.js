@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import homeBg from "../assets/home2.jpg"; // Import the image
-import'./home.css';
+import "./home.css";
 
 const Home = () => {
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate();
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div>
@@ -21,7 +26,7 @@ const Home = () => {
           </p>
           <button
             className="mt-6 bg-yellow-500 px-6 py-3 text-black font-semibold rounded-md hover:bg-yellow-600"
-            onClick={() => navigate("/rides")} // Navigate to Rides page
+            onClick={() => navigate("/login")}
           >
             Book a Ride
           </button>
@@ -33,7 +38,9 @@ const Home = () => {
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="text-3xl font-bold">About MegaCityCab</h2>
           <p className="mt-4 text-lg">
-            MegaCityCab provides fast, affordable, and safe transportation with an easy-to-use booking platform. Whether you're commuting or heading out on a trip, our cabs are always available for you.
+            MegaCityCab provides fast, affordable, and safe transportation with
+            an easy-to-use booking platform. Whether you're commuting or heading
+            out on a trip, our cabs are always available for you.
           </p>
         </div>
       </section>
@@ -45,15 +52,23 @@ const Home = () => {
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-white shadow-lg rounded-lg p-6">
               <h3 className="text-xl font-semibold">Quick Booking</h3>
-              <p className="mt-2">Book your ride in just a few taps, anytime and anywhere.</p>
+              <p className="mt-2">
+                Book your ride in just a few taps, anytime and anywhere.
+              </p>
             </div>
             <div className="bg-white shadow-lg rounded-lg p-6">
               <h3 className="text-xl font-semibold">24/7 Availability</h3>
-              <p className="mt-2">Our services are available around the clock for your convenience.</p>
+              <p className="mt-2">
+                Our services are available around the clock for your
+                convenience.
+              </p>
             </div>
             <div className="bg-white shadow-lg rounded-lg p-6">
               <h3 className="text-xl font-semibold">Safe and Secure</h3>
-              <p className="mt-2">Our drivers are professional and our vehicles are safe and well-maintained.</p>
+              <p className="mt-2">
+                Our drivers are professional and our vehicles are safe and
+                well-maintained.
+              </p>
             </div>
           </div>
         </div>
@@ -63,10 +78,12 @@ const Home = () => {
       <section className="py-16 bg-gray-100">
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="text-3xl font-bold">Contact Us</h2>
-          <p className="mt-4 text-lg">Have any questions? Reach out to us anytime.</p>
+          <p className="mt-4 text-lg">
+            Have any questions? Reach out to us anytime.
+          </p>
           <button
             className="mt-6 bg-yellow-500 px-6 py-3 text-black font-semibold rounded-md hover:bg-yellow-600"
-            onClick={() => navigate("/contact")} // Navigate to Contact page
+            onClick={() => navigate("/contact")}
           >
             Contact Us
           </button>

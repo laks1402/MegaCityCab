@@ -40,22 +40,17 @@ public class VehicleController extends HttpServlet {
                 }
             }
 
-            // Deserialize JSON into a Vehicle object
             Vehicle vehicle = objectMapper.readValue(jsonBuffer.toString(), Vehicle.class);
 
-            // Save or update the vehicle using the service
             vehicleService.saveOrUpdateVehicle(vehicle);
 
-            // Set status to 201 Created
             response.setStatus(HttpServletResponse.SC_CREATED);
 
-            // Write the Vehicle object back as JSON in the response
             PrintWriter out = response.getWriter();
             out.print(objectMapper.writeValueAsString(vehicle));
             out.flush();
 
         } catch (Exception e) {
-            // Set status to 500 Internal Server Error
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             PrintWriter out = response.getWriter();
             String errorMessage = "Error adding vehicle: " + e.getMessage();
@@ -64,7 +59,6 @@ public class VehicleController extends HttpServlet {
         }
     }
 
-    // Get a single Vehicle by ID or get all vehicles
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -74,7 +68,6 @@ public class VehicleController extends HttpServlet {
         try {
             String vehicleIdParam = request.getParameter("id");
             if (vehicleIdParam != null) {
-                // Get vehicle by ID
                 int vehicleId = Integer.parseInt(vehicleIdParam);
                 Vehicle vehicle = vehicleService.getVehicleById(vehicleId);
 
@@ -90,7 +83,6 @@ public class VehicleController extends HttpServlet {
                     out.flush();
                 }
             } else {
-                // Get all vehicles
                 List<Vehicle> vehicles = vehicleService.getAllVehicles();
                 response.setStatus(HttpServletResponse.SC_OK);
                 PrintWriter out = response.getWriter();
@@ -107,7 +99,6 @@ public class VehicleController extends HttpServlet {
         }
     }
 
-    // Update an existing Vehicle
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -115,7 +106,6 @@ public class VehicleController extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
 
         try {
-            // Read the request body (JSON) into a string
             StringBuilder jsonBuffer = new StringBuilder();
             String line;
             try (BufferedReader reader = request.getReader()) {
@@ -124,16 +114,12 @@ public class VehicleController extends HttpServlet {
                 }
             }
 
-            // Deserialize JSON into a Vehicle object
             Vehicle vehicle = objectMapper.readValue(jsonBuffer.toString(), Vehicle.class);
 
-            // Update the vehicle using the service
             vehicleService.saveOrUpdateVehicle(vehicle);
 
-            // Set status to 200 OK
             response.setStatus(HttpServletResponse.SC_OK);
 
-            // Write the updated Vehicle object back as JSON in the response
             PrintWriter out = response.getWriter();
             out.print(objectMapper.writeValueAsString(vehicle));
             out.flush();
@@ -147,7 +133,6 @@ public class VehicleController extends HttpServlet {
         }
     }
 
-    // Delete a Vehicle by ID
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -157,17 +142,13 @@ public class VehicleController extends HttpServlet {
         try {
             String vehicleIdParam = request.getParameter("id");
             if (vehicleIdParam != null) {
-                // Get vehicle ID from the request
                 int vehicleId = Integer.parseInt(vehicleIdParam);
 
-                // Delete the vehicle using the service
                 vehicleService.deleteVehicle(vehicleId);
 
-                // Set status to 204 No Content (successful deletion)
                 response.setStatus(HttpServletResponse.SC_NO_CONTENT);
                 response.getWriter().flush();
             } else {
-                // If ID is not provided, respond with an error
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 response.getWriter().print("{\"error\": \"Vehicle ID is required\"}");
                 response.getWriter().flush();

@@ -20,10 +20,9 @@ public class PaymentController extends HttpServlet {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public PaymentController() {
-        this.paymentService = new PaymentService(); // Replace with proper initialization if using DI
+        this.paymentService = new PaymentService();
     }
 
-    // Create - POST
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -39,24 +38,20 @@ public class PaymentController extends HttpServlet {
                 }
             }
 
-            // Deserialize JSON into a Payment object
+
             Payment payment = objectMapper.readValue(jsonBuffer.toString(), Payment.class);
 
-            // Create payment
             paymentService.createPayment(payment);
-            // Set status to 201 Created
+
             response.setStatus(HttpServletResponse.SC_CREATED);
 
-            // Write the Payment object back as JSON in the response
             PrintWriter out = response.getWriter();
             out.print(objectMapper.writeValueAsString(payment));
             out.flush();
 
         } catch (Exception e) {
-            // Set status to 500 Internal Server Error
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 
-            // Write error message as JSON
             PrintWriter out = response.getWriter();
             String errorMessage = "Error adding payment: " + e.getMessage();
             out.print(objectMapper.writeValueAsString(errorMessage));
@@ -64,14 +59,12 @@ public class PaymentController extends HttpServlet {
         }
     }
 
-    // Read (Single Payment by ID) or All Payments - GET
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String paymentIdParam = request.getParameter("id");
 
         if (paymentIdParam != null) {
-            // Fetch single payment by ID
             Long paymentId = Long.parseLong(paymentIdParam);
             Payment payment = paymentService.getPaymentById(paymentId);
 
@@ -90,7 +83,6 @@ public class PaymentController extends HttpServlet {
                 out.flush();
             }
         } else {
-            // Fetch all payments
             try {
                 List<Payment> payments = paymentService.getAllPayments();
                 response.setStatus(HttpServletResponse.SC_OK);
@@ -109,7 +101,6 @@ public class PaymentController extends HttpServlet {
         }
     }
 
-    // Update - PUT
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -144,7 +135,6 @@ public class PaymentController extends HttpServlet {
         }
     }
 
-    // Delete - DELETE
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -186,7 +176,6 @@ public class PaymentController extends HttpServlet {
         }
     }
 
-    // Error response helper class
     private static class ErrorResponse {
         private final String error;
 
